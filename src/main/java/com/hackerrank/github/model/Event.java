@@ -1,8 +1,12 @@
 package com.hackerrank.github.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.sql.Timestamp;
 
+@Entity
 public class Event {
+    @Id
     private Long id;
     private String type;
     private Actor actor;
