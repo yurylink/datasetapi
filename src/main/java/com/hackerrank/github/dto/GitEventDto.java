@@ -1,32 +1,18 @@
-package com.hackerrank.github.model;
+package com.hackerrank.github.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
 
-@Entity
-public class Event {
-    @Id
+public class GitEventDto {
     private Long id;
     private String type;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "actor_id")
-    private Actor actor;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "repo_id")
-    private Repo repo;
-
+    private ActorDto actor;
+    private RepoDto repo;
     private Timestamp createdAt;
 
-    public Event() {
+    public GitEventDto() {
     }
 
-    public Event(Long id, String type, Actor actor, Repo repo, Timestamp createdAt) {
+    public GitEventDto(Long id, String type, ActorDto actor, RepoDto repo, Timestamp createdAt) {
         this.id = id;
         this.type = type;
         this.actor = actor;
@@ -50,19 +36,19 @@ public class Event {
         this.type = type;
     }
 
-    public Actor getActor() {
+    public ActorDto getActor() {
         return actor;
     }
 
-    public void setActor(Actor actor) {
+    public void setActor(ActorDto actor) {
         this.actor = actor;
     }
 
-    public Repo getRepo() {
+    public RepoDto getRepo() {
         return repo;
     }
 
-    public void setRepo(Repo repo) {
+    public void setRepo(RepoDto repo) {
         this.repo = repo;
     }
 

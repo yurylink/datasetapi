@@ -1,24 +1,14 @@
-package com.hackerrank.github.model;
+package com.hackerrank.github.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
-
-@Entity
-public class Actor {
-    @Id
+public class ActorDto {
     private Long id;
     private String login;
     private String avatar;
 
-    @OneToMany(mappedBy = "actor")
-    private List<Event> listOfEvents;
-
-    public Actor() {
+    public ActorDto() {
     }
 
-    public Actor(Long id, String login, String avatar) {
+    public ActorDto(Long id, String login, String avatar) {
         this.id = id;
         this.login = login;
         this.avatar = avatar;
