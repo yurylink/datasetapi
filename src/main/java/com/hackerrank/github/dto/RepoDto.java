@@ -1,6 +1,10 @@
 package com.hackerrank.github.dto;
 
-public class RepoDto {
+import java.io.Serializable;
+
+public class RepoDto implements Serializable {
+    private static final long serialVersionUID = -975402153364620846L;
+
     private Long id;
     private String name;
     private String url;

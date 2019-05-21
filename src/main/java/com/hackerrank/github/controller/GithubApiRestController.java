@@ -1,27 +1,37 @@
 package com.hackerrank.github.controller;
 
-import com.hackerrank.github.model.Actor;
-import com.hackerrank.github.repository.ActorRepository;
+import com.hackerrank.github.business.GitEventBusiness;
+import com.hackerrank.github.dto.GitEventDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 public class GithubApiRestController {
 
     @Autowired
-    private ActorRepository actorRepository;
+    private GitEventBusiness business;
 
-    @GetMapping("/test")
-    public ResponseEntity test(){
-        Actor a1 = new Actor();
-        a1.setAvatar("avatart");
-        a1.setLogin("Anakin.Skywalker");
-        a1.setId(1L);
+    @GetMapping("/erase")
+    public ResponseEntity eraseAll(){
+        business.deleteAllEvents();
+        return ResponseEntity.ok().build();
+    }
 
-        actorRepository.save(a1);
+    @GetMapping("/event")
+    public ResponseEntity getall(){
+        List<GitEventDto> result = business.getAllEvents();
+        return ResponseEntity.ok(result);
+    }
 
-        return ResponseEntity.ok().body(actorRepository.findAll());
+    @PostMapping("/event")
+    public ResponseEntity createEvent(@RequestBody GitEventDto dto){
+        GitEventDto responseDto = business.createEvent(dto);
+        return ResponseEntity.ok(responseDto);
     }
 }

@@ -1,18 +1,30 @@
 package com.hackerrank.github.dto;
 
-import java.sql.Timestamp;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hackerrank.github.util.JsonDateDeserializer;
+import com.hackerrank.github.util.JsonDateSerialize;
 
-public class GitEventDto {
+import java.io.Serializable;
+import java.util.Date;
+
+public class GitEventDto implements Serializable {
+    private static final long serialVersionUID = 7045372686030912557L;
+
     private Long id;
     private String type;
     private ActorDto actor;
     private RepoDto repo;
-    private Timestamp createdAt;
+    @JsonProperty("created_at")
+    @JsonSerialize(using = JsonDateSerialize.class)
+    @JsonDeserialize(using = JsonDateDeserializer.class)
+    private Date createdAt;
 
     public GitEventDto() {
     }
 
-    public GitEventDto(Long id, String type, ActorDto actor, RepoDto repo, Timestamp createdAt) {
+    public GitEventDto(Long id, String type, ActorDto actor, RepoDto repo, Date createdAt) {
         this.id = id;
         this.type = type;
         this.actor = actor;
@@ -24,39 +36,19 @@ public class GitEventDto {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getType() {
         return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public ActorDto getActor() {
         return actor;
     }
 
-    public void setActor(ActorDto actor) {
-        this.actor = actor;
-    }
-
     public RepoDto getRepo() {
         return repo;
     }
 
-    public void setRepo(RepoDto repo) {
-        this.repo = repo;
-    }
-
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
-    }
-
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
     }
 }
