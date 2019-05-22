@@ -1,6 +1,7 @@
 package com.hackerrank.github.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -12,7 +13,7 @@ public class Repo {
     private String name;
     private String url;
 
-    @OneToMany(mappedBy = "repo")
+    @OneToMany(mappedBy = "repo", fetch = FetchType.LAZY)
     private List<Event> listOfEvents;
 
     public Repo() {
@@ -22,6 +23,13 @@ public class Repo {
         this.id = id;
         this.name = name;
         this.url = url;
+    }
+
+    public Repo(Long id, String name, String url, List<Event> listOfEvents) {
+        this.id = id;
+        this.name = name;
+        this.url = url;
+        this.listOfEvents = listOfEvents;
     }
 
     public Long getId() {

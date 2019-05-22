@@ -18,6 +18,12 @@ public class Actor {
     public Actor() {
     }
 
+    public Actor(Long id, String login, String avatar) {
+        this.id = id;
+        this.login = login;
+        this.avatar = avatar;
+    }
+
     public Actor(Long id, String login, String avatar, List<Event> listOfEvents) {
         this.id = id;
         this.login = login;

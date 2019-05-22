@@ -1,5 +1,6 @@
 package com.hackerrank.github.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -14,11 +15,11 @@ public class Event {
     private Long id;
     private String type;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "actor_id")
+    @ManyToOne(fetch = FetchType.EAGER , cascade = CascadeType.ALL)
+    @JoinColumn(name = "actor_id", insertable = true, updatable = true)
     private Actor actor;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "repo_id")
     private Repo repo;
 

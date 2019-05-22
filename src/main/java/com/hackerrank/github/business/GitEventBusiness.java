@@ -35,6 +35,7 @@ public class GitEventBusiness {
 
     public GitEventDto createEvent(GitEventDto dto){
         final Event entity = eventRepository.save(EventConverter.convertDtoToEntity(dto));
+
         return EventConverter.convertEntityToDto(entity);
     }
 

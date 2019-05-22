@@ -24,6 +24,6 @@ public class ActorConverter {
         final String login = targetIdNull ? null : dto.getLogin();
         final String avatar = targetIdNull ? null : dto.getAvatarUrl();
 //        final List<Event> listOfEvents = listOfEventsIsNull ? null : actorEntity.getListOfEvents().stream().forEach(event -> );
-        return new Actor(id, login, avatar, null);
+        return new Actor(id, login, avatar);
     }
 }
