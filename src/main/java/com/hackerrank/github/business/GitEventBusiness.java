@@ -1,15 +1,25 @@
 package com.hackerrank.github.business;
 
+import com.hackerrank.github.converter.ActorConverter;
 import com.hackerrank.github.converter.EventConverter;
+import com.hackerrank.github.dto.ActorDto;
 import com.hackerrank.github.dto.GitEventDto;
+import com.hackerrank.github.exceptions.AvatarUpdateException;
+import com.hackerrank.github.exceptions.NoEntityFoundException;
+import com.hackerrank.github.model.Actor;
 import com.hackerrank.github.model.Event;
 import com.hackerrank.github.repository.ActorRepository;
 import com.hackerrank.github.repository.EventRepository;
 import com.hackerrank.github.repository.RepoRepository;
+import com.hackerrank.github.util.ActorEventComparator;
+import com.hackerrank.github.util.EventComprator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Component
@@ -47,5 +57,27 @@ public class GitEventBusiness {
         if(events.isEmpty())
             throw new Exception("No entity found");
         return eventsDtos;
+    }
+
+    public ActorDto updateActorAvatar(ActorDto actorDto) throws AvatarUpdateException, NoEntityFoundException, Exception {
+        Actor actorEntity = actorRepository.findOne(actorDto.getId());
+        if(actorEntity == null){
+            throw new NoEntityFoundException();
+        }
+        if(actorDto.getLogin()!= null && !actorEntity.getAvatar().equalsIgnoreCase(actorDto.getLogin())){
+            throw new AvatarUpdateException();
+        }
+        actorEntity.setAvatar(actorDto.getAvatarUrl());
+        return ActorConverter.convertToDto(actorRepository.save(actorEntity));
+    }
+
+    public List<ActorDto> findAllSortedByEvent(){
+        final List<Actor> resultEntity = actorRepository.findAll();
+
+        return resultEntity.
+                stream().
+                sorted(new ActorEventComparator()).
+                map(actor -> ActorConverter.convertToDto(actor)).
+                collect(Collectors.toList());
     }
 }

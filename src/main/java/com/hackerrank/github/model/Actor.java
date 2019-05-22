@@ -1,6 +1,7 @@
 package com.hackerrank.github.model;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -12,8 +13,8 @@ public class Actor {
     private String login;
     private String avatar;
 
-    @OneToMany(mappedBy = "actor")
-    private List<Event> listOfEvents;
+    @OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
+    private List<Event> events;
 
     public Actor() {
     }
@@ -28,7 +29,7 @@ public class Actor {
         this.id = id;
         this.login = login;
         this.avatar = avatar;
-        this.listOfEvents = listOfEvents;
+        this.events = listOfEvents;
     }
 
     public Long getId() {
@@ -43,7 +44,11 @@ public class Actor {
         return avatar;
     }
 
-    public List<Event> getListOfEvents() {
-        return listOfEvents;
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public List<Event> getEvents() {
+        return events;
     }
 }

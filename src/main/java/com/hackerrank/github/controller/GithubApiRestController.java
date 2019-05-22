@@ -1,13 +1,17 @@
 package com.hackerrank.github.controller;
 
 import com.hackerrank.github.business.GitEventBusiness;
+import com.hackerrank.github.dto.ActorDto;
 import com.hackerrank.github.dto.GitEventDto;
+import com.hackerrank.github.exceptions.AvatarUpdateException;
+import com.hackerrank.github.exceptions.NoEntityFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -45,5 +49,25 @@ public class GithubApiRestController {
         }catch (Exception e){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+
+    @PutMapping("/actor")
+    public ResponseEntity updateActorAvatar(@RequestBody ActorDto actorDto){
+        try{
+            ActorDto updatedActor = business.updateActorAvatar(actorDto);
+            return ResponseEntity.ok(updatedActor);
+        }catch (AvatarUpdateException e){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Only avatar can be changed. Operation not Allowed.");
+        }catch (NoEntityFoundException e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No actor with id" + (actorDto.getId() == null ? "[null]" : actorDto.getId()) + " found.");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @GetMapping("/actors")
+    public ResponseEntity getAllActorSorted(){
+        final List<ActorDto> resultList = business.findAllSortedByEvent();
+        return ResponseEntity.ok(resultList);
     }
 }
