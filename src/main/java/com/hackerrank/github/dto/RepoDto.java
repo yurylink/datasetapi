@@ -1,24 +1,18 @@
-package com.hackerrank.github.model;
+package com.hackerrank.github.dto;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import java.util.List;
+import java.io.Serializable;
 
-@Entity
-public class Repo {
-    @Id
+public class RepoDto implements Serializable {
+    private static final long serialVersionUID = -975402153364620846L;
+
     private Long id;
     private String name;
     private String url;
 
-    @OneToMany(mappedBy = "repo")
-    private List<Event> listOfEvents;
-
-    public Repo() {
+    public RepoDto() {
     }
 
-    public Repo(Long id, String name, String url) {
+    public RepoDto(Long id, String name, String url) {
         this.id = id;
         this.name = name;
         this.url = url;
@@ -46,9 +40,5 @@ public class Repo {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public List<Event> getListOfEvents() {
-        return listOfEvents;
     }
 }

@@ -1,24 +1,48 @@
 package com.hackerrank.github.model;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
+import java.util.Date;
 
+@Entity
 public class Event {
+    @Id
     private Long id;
     private String type;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "actor_id")
     private Actor actor;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "repo_id")
     private Repo repo;
-    private Timestamp createdAt;
+
+//    private Timestamp createdAt;
+    private Date createdAt;
 
     public Event() {
     }
 
-    public Event(Long id, String type, Actor actor, Repo repo, Timestamp createdAt) {
+    public Event(Long id, String type, Actor actor, Repo repo, Date createdAt) {
         this.id = id;
         this.type = type;
         this.actor = actor;
         this.repo = repo;
         this.createdAt = createdAt;
     }
+
+    //    public Event(Long id, String type, Actor actor, Repo repo, Timestamp createdAt) {
+//        this.id = id;
+//        this.type = type;
+//        this.actor = actor;
+//        this.repo = repo;
+//        this.createdAt = createdAt;
+//    }
 
     public Long getId() {
         return id;
@@ -52,11 +76,16 @@ public class Event {
         this.repo = repo;
     }
 
-    public Timestamp getCreatedAt() {
+//    public Timestamp getCreatedAt() {
+//        return createdAt;
+//    }
+
+
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
-        this.createdAt = createdAt;
-    }
+//    public void setCreatedAt(Timestamp createdAt) {
+//        this.createdAt = createdAt;
+//    }
 }

@@ -225,3 +225,9 @@ pickle-email-*.html
 
 # Ignore node_modules
 node_modules/
+
+# Ignore Intellij IDEA Folder
+.idea
+*.iws
+*.iml
+*.ipr
