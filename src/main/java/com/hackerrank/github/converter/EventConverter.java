@@ -7,7 +7,6 @@ import com.hackerrank.github.model.Actor;
 import com.hackerrank.github.model.Event;
 import com.hackerrank.github.model.Repo;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 public class EventConverter {
@@ -24,7 +23,7 @@ public class EventConverter {
         return new GitEventDto(id, type, actor, repo, createdAt);
     }
 
-    public static Event convertEntityToEntity(GitEventDto dto){
+    public static Event convertDtoToEntity(GitEventDto dto){
         final boolean isTargerNull = dto == null;
 
         final Long id = isTargerNull ? null : dto.getId();

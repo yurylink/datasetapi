@@ -34,7 +34,17 @@ public class GitEventBusiness {
     }
 
     public GitEventDto createEvent(GitEventDto dto){
-        final Event entity = eventRepository.save(EventConverter.convertEntityToEntity(dto));
+        final Event entity = eventRepository.save(EventConverter.convertDtoToEntity(dto));
         return EventConverter.convertEntityToDto(entity);
+    }
+
+    public List<GitEventDto> getAllEventByActorId(Long actorId) throws Exception{
+        final List<Event> events = eventRepository.findAllByActor_Id(actorId);
+        if(events == null)
+            throw new Exception("No entity found");
+        List<GitEventDto> eventsDtos = events.stream().map(event -> EventConverter.convertEntityToDto(event)).collect(Collectors.toList());
+        if(events.isEmpty())
+            throw new Exception("No entity found");
+        return eventsDtos;
     }
 }
