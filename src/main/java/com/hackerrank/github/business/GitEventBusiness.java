@@ -11,15 +11,13 @@ import com.hackerrank.github.model.Event;
 import com.hackerrank.github.repository.ActorRepository;
 import com.hackerrank.github.repository.EventRepository;
 import com.hackerrank.github.repository.RepoRepository;
-import com.hackerrank.github.util.ActorEventComparator;
-import com.hackerrank.github.util.EventComprator;
+import com.hackerrank.github.comparator.ActorEventQuantityComparator;
+import com.hackerrank.github.util.ActorStreakCalculation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @Component
@@ -71,12 +69,27 @@ public class GitEventBusiness {
         return ActorConverter.convertToDto(actorRepository.save(actorEntity));
     }
 
-    public List<ActorDto> findAllSortedByEvent(){
+    public List<ActorDto> findAllSortedByEventQuantity(){
         final List<Actor> resultEntity = actorRepository.findAll();
 
         return resultEntity.
                 stream().
-                sorted(new ActorEventComparator()).
+                sorted(new ActorEventQuantityComparator()).
+                map(actor -> ActorConverter.convertToDto(actor)).
+                collect(Collectors.toList());
+    }
+
+    public List<ActorDto> findAllSortedByEventStreak() {
+        List<Actor> resultEntity = actorRepository.findAll();
+//        final List<Actor> actorListWithStreak = resultEntity.stream().map(actor -> ActorStreakCalculation.setMaximumStreakAndLatestEventDate(actor) ).collect(Collectors.toList());
+        final List<Actor> actorListWithStreak = new ArrayList<>();
+        resultEntity.
+                stream().
+                forEach(actor -> actorListWithStreak.add(ActorStreakCalculation.setMaximumStreakAndLatestEventDate(actor)));
+
+        return actorListWithStreak.
+                stream().
+                sorted().
                 map(actor -> ActorConverter.convertToDto(actor)).
                 collect(Collectors.toList());
     }

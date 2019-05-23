@@ -66,8 +66,14 @@ public class GithubApiRestController {
     }
 
     @GetMapping("/actors")
-    public ResponseEntity getAllActorSorted(){
-        final List<ActorDto> resultList = business.findAllSortedByEvent();
+    public ResponseEntity getAllActorSortedNumberOfEvents(){
+        final List<ActorDto> resultList = business.findAllSortedByEventQuantity();
+        return ResponseEntity.ok(resultList);
+    }
+
+    @GetMapping("/actors/streak")
+    public ResponseEntity getAllActorSortedByStreak(){
+        final List<ActorDto> resultList = business.findAllSortedByEventStreak();
         return ResponseEntity.ok(resultList);
     }
 }

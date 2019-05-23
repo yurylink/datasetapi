@@ -1,11 +1,12 @@
-package com.hackerrank.github.util;
+package com.hackerrank.github.comparator;
 
 import com.hackerrank.github.model.Actor;
 import com.hackerrank.github.model.Event;
+import com.hackerrank.github.util.EventComprator;
 
 import java.util.Comparator;
 
-public class ActorEventComparator implements Comparator<Actor> {
+public class ActorEventQuantityComparator implements Comparator<Actor> {
 
     @Override
     public int compare(Actor o1, Actor o2) {

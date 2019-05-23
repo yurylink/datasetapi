@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,6 +17,12 @@ public class Actor {
 
     @OneToMany(mappedBy = "actor", fetch = FetchType.LAZY)
     private List<Event> events;
+
+    @Transient
+    private Integer maximumStreak;
+
+    @Transient
+    private Date latestEvent;
 
     public Actor() {
     }
@@ -50,5 +58,21 @@ public class Actor {
 
     public List<Event> getEvents() {
         return events;
+    }
+
+    public Integer getMaximumStreak() {
+        return maximumStreak;
+    }
+
+    public void setMaximumStreak(Integer maximumStreak) {
+        this.maximumStreak = maximumStreak;
+    }
+
+    public Date getLatestEvent() {
+        return latestEvent;
+    }
+
+    public void setLatestEvent(Date latestEvent) {
+        this.latestEvent = latestEvent;
     }
 }
