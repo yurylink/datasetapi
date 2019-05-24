@@ -8,7 +8,7 @@ public class ActorEventStreakComparator implements Comparator<Actor> {
 
     @Override
     public int compare(Actor o1, Actor o2) {
-        Integer compareMaximumSteak = o1.getMaximumStreak().compareTo(o2.getMaximumStreak());
+        Integer compareMaximumSteak = o2.getMaximumStreak().compareTo(o1.getMaximumStreak());
 
         if (compareMaximumSteak==0){
             Integer latestEventdate = o2.getLatestEvent().compareTo(o1.getLatestEvent());
