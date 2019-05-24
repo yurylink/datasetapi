@@ -62,7 +62,7 @@ public class GitEventBusiness {
         if(actorEntity == null){
             throw new NoEntityFoundException();
         }
-        if(actorDto.getLogin()!= null && !actorEntity.getAvatar().equalsIgnoreCase(actorDto.getLogin())){
+        if(actorDto.getLogin()!= null && !actorEntity.getLogin().equalsIgnoreCase(actorDto.getLogin())){
             throw new AvatarUpdateException();
         }
         actorEntity.setAvatar(actorDto.getAvatarUrl());
