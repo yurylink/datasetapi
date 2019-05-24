@@ -91,7 +91,7 @@ public class GitEventBusiness {
 
         return actorListWithStreak.
                 stream().
-//                filter(actor -> actor.getMaximumStreak().compareTo(maxStream)==0).
+                filter(actor -> actor.getMaximumStreak().compareTo(maxStream)==0).
                 sorted(new ActorEventStreakComparator()).
                 map(this::convertActor).
                 collect(Collectors.toList());

@@ -11,7 +11,7 @@ public class ActorEventStreakComparator implements Comparator<Actor> {
         Integer compareMaximumSteak = o1.getMaximumStreak().compareTo(o2.getMaximumStreak());
 
         if (compareMaximumSteak==0){
-            Integer latestEventdate = o1.getLatestEvent().compareTo(o2.getLatestEvent());
+            Integer latestEventdate = o2.getLatestEvent().compareTo(o1.getLatestEvent());
             if(latestEventdate == 0){
                 return o1.getLogin().compareTo(o2.getLogin());
             }
