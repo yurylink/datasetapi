@@ -1,5 +1,6 @@
 package com.hackerrank.github.business;
 
+import com.hackerrank.github.comparator.ActorEventStreakComparator;
 import com.hackerrank.github.converter.ActorConverter;
 import com.hackerrank.github.converter.EventConverter;
 import com.hackerrank.github.dto.ActorDto;
@@ -81,8 +82,17 @@ public class GitEventBusiness {
                 stream().
                 forEach(actor -> actorListWithStreak.add(ActorStreakCalculation.setMaximumStreakAndLatestEventDate(actor)));
 
+        Integer maxStream =
+                resultEntity.
+                        stream().
+                        max((o1, o2) -> o1.getMaximumStreak().compareTo(o2.getMaximumStreak())).
+                        get().
+                        getMaximumStreak();
+
         return actorListWithStreak.
                 stream().
+                filter(actor -> actor.getMaximumStreak().compareTo(maxStream)==0).
+                sorted(new ActorEventStreakComparator()).
                 map(this::convertActor).
                 collect(Collectors.toList());
     }
