@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -72,9 +75,15 @@ public class GithubApiRestController {
         return ResponseEntity.ok(resultList);
     }
 
-    @GetMapping("/actors/streak")
-    public ResponseEntity<List<ActorDto>> getAllActorSortedByStreak(){
+//    @GetMapping("/actors/streak")
+//    public ResponseEntity<List<ActorDto>> getAllActorSortedByStreak(){
+//        final List<ActorDto> resultList = business.findAllSortedByEventStreak();
+//        return ResponseEntity.ok(resultList);
+//    }
+
+    @RequestMapping(value = "/actors/streak", method = RequestMethod.GET)
+    public @ResponseBody List<ActorDto> getAllActorSortedByStreack(){
         final List<ActorDto> resultList = business.findAllSortedByEventStreak();
-        return ResponseEntity.ok(resultList);
+        return resultList;
     }
 }
