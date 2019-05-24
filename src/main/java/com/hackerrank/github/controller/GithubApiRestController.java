@@ -82,10 +82,7 @@ public class GithubApiRestController {
     @GetMapping("/actors/streak")
     public ResponseEntity getAllActorSortedByStreak(){
         final List<ActorDto> resultList = business.findAllSortedByEventStreak();
-
-        final HttpHeaders header = new HttpHeaders();
-        header.add("Content-Type", "application/json");
-        return ResponseEntity.ok().headers(header).body(resultList);
+        return ResponseEntity.ok().body(resultList);
     }
 
 //    @RequestMapping(value = "/actors/streak", method = RequestMethod.GET)
