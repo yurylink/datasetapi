@@ -2,7 +2,9 @@ package com.hackerrank.github.comparator;
 
 import com.hackerrank.github.model.Actor;
 
+import java.text.Collator;
 import java.util.Comparator;
+import java.util.Locale;
 
 public class ActorEventStreakComparator implements Comparator<Actor> {
 
@@ -10,14 +12,39 @@ public class ActorEventStreakComparator implements Comparator<Actor> {
     public int compare(Actor o1, Actor o2) {
         Integer compareMaximumSteak = o2.getMaximumStreak().compareTo(o1.getMaximumStreak());
 
-        if (compareMaximumSteak==0){
+        if (compareMaximumSteak == 0) {
             Integer latestEventdate = o2.getLatestEvent().compareTo(o1.getLatestEvent());
-            if(latestEventdate == 0){
-                return o1.getLogin().compareTo(o2.getLogin());
+            if (latestEventdate == 0) {
+                return compareStrings(o1.getLogin(), o2.getLogin());
             }
             return latestEventdate;
-        }else{
+        } else {
             return compareMaximumSteak;
         }
+    }
+
+    private static Integer compareStrings(String login1, String login2){
+        Collator collator = Collator.getInstance(Locale.US);
+        collator.setStrength(Collator.TERTIARY);
+
+        Integer comparing = collator.compare(login1, login2);
+
+        if(comparing == -1){
+            return -1;
+        }else if(comparing == 1){
+            return 1;
+        }else {
+            return 0;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println(compareStrings("a", "b"));
+
+        String login1 = "ryoung";
+        String login2 = "jenniferhampton";
+
+        System.out.println(compareStrings(login1, login2));
     }
 }

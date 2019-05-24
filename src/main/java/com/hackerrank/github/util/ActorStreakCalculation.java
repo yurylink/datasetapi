@@ -4,9 +4,11 @@ import com.hackerrank.github.model.Actor;
 import com.hackerrank.github.model.Event;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class ActorStreakCalculation {
@@ -28,7 +30,7 @@ public class ActorStreakCalculation {
 
     private static void setMaximumStrakAndDate(Actor actor, List<Event> events){
         Integer maximumEventStreak = 0;
-        LocalDate lastComparableDate = null;
+        LocalDateTime lastComparableDate = null;
 
         if(events != null){
             Integer eventStreakCounter = 0;
@@ -39,8 +41,8 @@ public class ActorStreakCalculation {
                     lastComparableDate = convertToLocalDateTimeViaInstant(event.getCreatedAt());
                     eventStreakCounter++;
                 }else{
-                    LocalDate lastComparableDatePlus1Day = lastComparableDate.plusDays(1);
-                    LocalDate currentDate = convertToLocalDateTimeViaInstant(event.getCreatedAt());
+                    LocalDateTime lastComparableDatePlus1Day = lastComparableDate.plusDays(1);
+                    LocalDateTime currentDate = convertToLocalDateTimeViaInstant(event.getCreatedAt());
 
                     if((lastComparableDate.getYear() == currentDate.getYear()) &&
                        (lastComparableDate.getMonth() == currentDate.getMonth()) &&
@@ -64,15 +66,14 @@ public class ActorStreakCalculation {
         actor.setLatestEvent(convertToDateViaInstant(lastComparableDate));
     }
 
-    private static LocalDate convertToLocalDateTimeViaInstant(Date dateToConvert) {
+    private static LocalDateTime convertToLocalDateTimeViaInstant(Date dateToConvert) {
         return dateToConvert.toInstant()
                 .atZone(ZoneId.systemDefault())
-                .toLocalDate();
+                .toLocalDateTime();
     }
 
-    public static Date convertToDateViaInstant(LocalDate dateToConvert) {
-        return java.util.Date.from(dateToConvert.atStartOfDay()
-                .atZone(ZoneId.systemDefault())
-                .toInstant());
+    public static Date convertToDateViaInstant(LocalDateTime localDate) {
+        Date date1 = Date.from(localDate.atZone(ZoneId.systemDefault()).toInstant());
+        return date1;
     }
 }
