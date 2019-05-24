@@ -5,8 +5,12 @@ import com.hackerrank.github.dto.ActorDto;
 import com.hackerrank.github.dto.GitEventDto;
 import com.hackerrank.github.exceptions.AvatarUpdateException;
 import com.hackerrank.github.exceptions.NoEntityFoundException;
+import com.sun.xml.internal.ws.client.sei.ResponseBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -75,15 +79,18 @@ public class GithubApiRestController {
         return ResponseEntity.ok(resultList);
     }
 
-//    @GetMapping("/actors/streak")
-//    public ResponseEntity<List<ActorDto>> getAllActorSortedByStreak(){
-//        final List<ActorDto> resultList = business.findAllSortedByEventStreak();
-//        return ResponseEntity.ok(resultList);
-//    }
-
-    @RequestMapping(value = "/actors/streak", method = RequestMethod.GET)
-    public @ResponseBody List<ActorDto> getAllActorSortedByStreack(){
+    @GetMapping("/actors/streak")
+    public ResponseEntity getAllActorSortedByStreak(){
         final List<ActorDto> resultList = business.findAllSortedByEventStreak();
-        return resultList;
+
+        final HttpHeaders header = new HttpHeaders();
+        header.add("Content-Type", "application/json");
+        return ResponseEntity.ok().headers(header).body(resultList);
     }
+
+//    @RequestMapping(value = "/actors/streak", method = RequestMethod.GET)
+//    public @ResponseBody List<ActorDto> getAllActorSortedByStreack(){
+//        final List<ActorDto> resultList = business.findAllSortedByEventStreak();
+//        return resultList;
+//    }
 }
