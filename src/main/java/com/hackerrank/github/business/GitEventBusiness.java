@@ -16,6 +16,7 @@ import com.hackerrank.github.comparator.ActorEventQuantityComparator;
 import com.hackerrank.github.util.ActorStreakCalculation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +34,10 @@ public class GitEventBusiness {
     @Autowired
     private RepoRepository repoRepository;
 
+    @Transactional
     public void deleteAllEvents(){
         eventRepository.deleteAll();
+        actorRepository.deleteAll();
     }
 
     public List<GitEventDto> getAllEvents(){
@@ -82,19 +85,20 @@ public class GitEventBusiness {
                 stream().
                 forEach(actor -> actorListWithStreak.add(ActorStreakCalculation.setMaximumStreakAndLatestEventDate(actor)));
 
-        Integer maxStream =
-                resultEntity.
-                        stream().
-                        max((o1, o2) -> o1.getMaximumStreak().compareTo(o2.getMaximumStreak())).
-                        get().
-                            getMaximumStreak();
+//        Integer maxStream =
+//                resultEntity.
+//                        stream().
+//                        max((o1, o2) -> o1.getMaximumStreak().compareTo(o2.getMaximumStreak())).
+//                        get().
+//                            getMaximumStreak();
 
-        return actorListWithStreak.
-                stream().
-//                filter(actor -> actor.getMaximumStreak().compareTo(maxStream)==0).
-                sorted(new ActorEventStreakComparator()).
-                map(this::convertActor).
-                collect(Collectors.toList());
+        final List<ActorDto> resultDto =
+                actorListWithStreak.
+                        stream().
+//                        filter(actor -> actor.getMaximumStreak().compareTo(maxStream)==0).
+                        sorted(new ActorEventStreakComparator()).
+                        map(this::convertActor).collect(Collectors.toList());
+        return resultDto;
     }
 
     private ActorDto convertActor(Actor actor){

@@ -28,7 +28,7 @@ public class ActorEventQuantityComparator implements Comparator<Actor> {
             List<Event> eventList1 = o1.getEvents().stream().sorted(new EventComprator()).collect(Collectors.toList());
             List<Event> eventList2 = o2.getEvents().stream().sorted(new EventComprator()).collect(Collectors.toList());
 
-            int compareEventsResult = new EventComprator().compare(eventList1.get(0), eventList2.get(0));
+            int compareEventsResult = new EventComprator().compare(eventList2.get(0), eventList1.get(0));
             if (compareEventsResult == 0)
                 return o1.getLogin().compareTo(o2.getLogin());
             return compareEventsResult;

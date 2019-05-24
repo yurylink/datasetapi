@@ -19,7 +19,7 @@ public class Event {
     private Actor actor;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "repo_id")
+    @JoinColumn(name = "repo_id", insertable = true, updatable = true)
     private Repo repo;
 
 //    private Timestamp createdAt;
