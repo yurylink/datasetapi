@@ -8,6 +8,12 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Sort Actors by :
+ *  1º The number of events
+ *  2º The latest event
+ *  3º The Login name in alphabetical order
+ */
 public class ActorEventQuantityComparator implements Comparator<Actor> {
 
     @Override

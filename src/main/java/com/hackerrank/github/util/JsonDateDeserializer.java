@@ -10,6 +10,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Json date Deserialize inn the format used on the test
+ */
 public class JsonDateDeserializer extends JsonDeserializer<Date> {
 
     @Override

@@ -3,6 +3,9 @@ package com.hackerrank.github.converter;
 import com.hackerrank.github.dto.RepoDto;
 import com.hackerrank.github.model.Repo;
 
+/**
+ * Class responsible for convert the Repo Data Transfer Object in a Entity and Entity in a DTO
+ */
 public class RepoConverter {
 
     public static RepoDto convertEntityToDto(Repo repo){

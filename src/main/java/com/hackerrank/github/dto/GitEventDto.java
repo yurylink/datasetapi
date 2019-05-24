@@ -9,6 +9,9 @@ import com.hackerrank.github.util.JsonDateSerialize;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * This object should be used to data only for transfer and customize the JSON names used on the controllers
+ */
 public class GitEventDto implements Serializable {
     private static final long serialVersionUID = 7045372686030912557L;
 

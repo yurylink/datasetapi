@@ -9,6 +9,9 @@ import com.hackerrank.github.model.Repo;
 
 import java.util.Date;
 
+/**
+ * Class responsible for convert the Event Data Transfer Object in a Entity and Entity in a DTO
+ */
 public class EventConverter {
 
     public static GitEventDto convertEntityToDto(Event event){

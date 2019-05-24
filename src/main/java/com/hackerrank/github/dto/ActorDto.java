@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.io.Serializable;
 
+/**
+ * This object should be used to data only for transfer and customize the JSON names used on the controllers
+ */
 public class ActorDto implements Serializable {
     private static final long serialVersionUID = 8731627752955965514L;
 

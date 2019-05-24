@@ -3,6 +3,9 @@ package com.hackerrank.github.converter;
 import com.hackerrank.github.dto.ActorDto;
 import com.hackerrank.github.model.Actor;
 
+/**
+ * Class responsible for convert the Actor Data Transfer Object in a Entity and Entity in a DTO
+ */
 public class ActorConverter {
 
     public static ActorDto convertToDto(Actor actorEntity){

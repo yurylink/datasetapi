@@ -22,6 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+/**
+ * All the business rules for this system should be concetrates here. All the public methods should return a DTO (Data tranfer object) to be used on the controller
+ */
 @Component
 public class GitEventBusiness {
 
@@ -40,16 +44,32 @@ public class GitEventBusiness {
         actorRepository.deleteAll();
     }
 
+    /**
+     * Return all the Events on the database
+     * @return A List of all Events
+     */
     public List<GitEventDto> getAllEvents(){
         List<Event> listOfEvent = eventRepository.findAll();
         return listOfEvent.stream().map(this::convertGitEvent).collect(Collectors.toList());
     }
 
+    /**
+     * Receive a Dto and creates an Event, Actor and Repository if it's necessary
+     * @param dto
+     * @return The created Object
+     */
     public GitEventDto createEvent(GitEventDto dto){
         final Event entity = eventRepository.save(EventConverter.convertDtoToEntity(dto));
         return EventConverter.convertEntityToDto(entity);
     }
 
+    /**
+     * Return a List of All events of an Actor if present otherwise trhows an Exception
+     *
+     * @param actorId
+     * @return List of All events of an Actor.
+     * @throws Exception if there is no Event for that actor
+     */
     public List<GitEventDto> getAllEventByActorId(Long actorId) throws Exception{
         final List<Event> events = eventRepository.findAllByActor_Id(actorId);
         if(events == null)
@@ -60,6 +80,15 @@ public class GitEventBusiness {
         return eventsDtos;
     }
 
+    /**
+     * Updates the Avatar Url of an actor. If the object dto try to update another field rather than Avatar throws an AvatarUpdateExecption.
+     *
+     * @param actorDto
+     * @return A copy of the new Actor
+     * @throws AvatarUpdateException If another field will be updated
+     * @throws NoEntityFoundException In case there is no Entity for that ID on the database
+     * @throws Exception
+     */
     public ActorDto updateActorAvatar(ActorDto actorDto) throws AvatarUpdateException, NoEntityFoundException, Exception {
         Actor actorEntity = actorRepository.findOne(actorDto.getId());
         if(actorEntity == null){
@@ -72,12 +101,21 @@ public class GitEventBusiness {
         return ActorConverter.convertToDto(actorRepository.save(actorEntity));
     }
 
+    /**
+     * Return a list of Actors sorted by the total number of Events that he has in descending order.
+     * @return Return a list of Actors sorted by the total number of Events that he has in descending order.
+     */
     public List<ActorDto> findAllSortedByEventQuantity(){
         List<Actor> resultEntity = actorRepository.findAll();
         final List<Actor> sortedList = resultEntity.stream().sorted(new ActorEventQuantityComparator()).collect(Collectors.toList());
         return sortedList.stream().map(this::convertActor).collect(Collectors.toList());
     }
 
+    /**
+     * Sort all Actors by the maximum number of consecutive days of Events.
+     *
+     * @return A sorted List of Actors by streak
+     */
     public List<ActorDto> findAllSortedByEventStreak() {
         List<Actor> resultEntity = actorRepository.findAll();
         final List<Actor> actorListWithStreak = new ArrayList<>();
@@ -85,17 +123,9 @@ public class GitEventBusiness {
                 stream().
                 forEach(actor -> actorListWithStreak.add(ActorStreakCalculation.setMaximumStreakAndLatestEventDate(actor)));
 
-//        Integer maxStream =
-//                resultEntity.
-//                        stream().
-//                        max((o1, o2) -> o1.getMaximumStreak().compareTo(o2.getMaximumStreak())).
-//                        get().
-//                            getMaximumStreak();
-
         final List<ActorDto> resultDto =
                 actorListWithStreak.
                         stream().
-//                        filter(actor -> actor.getMaximumStreak().compareTo(maxStream)==0).
                         sorted(new ActorEventStreakComparator()).
                         map(this::convertActor).collect(Collectors.toList());
         return resultDto;

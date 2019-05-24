@@ -9,6 +9,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Json date Serialize in the format used on the test
+ */
 public class JsonDateSerialize extends JsonSerializer<Date> {
 
     @Override

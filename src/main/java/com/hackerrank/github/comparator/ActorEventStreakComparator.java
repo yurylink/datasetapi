@@ -6,6 +6,12 @@ import java.text.Collator;
 import java.util.Comparator;
 import java.util.Locale;
 
+/**
+ * Sort Actors by :
+ *  1º Maximum of consecutive days of events
+ *  2º The latest event
+ *  3º The Login in Alphabetical order
+ */
 public class ActorEventStreakComparator implements Comparator<Actor> {
 
     @Override
@@ -23,28 +29,10 @@ public class ActorEventStreakComparator implements Comparator<Actor> {
         }
     }
 
+
     private static Integer compareStrings(String login1, String login2){
         Collator collator = Collator.getInstance(Locale.US);
         collator.setStrength(Collator.TERTIARY);
-
-        Integer comparing = collator.compare(login1, login2);
-
-        if(comparing == -1){
-            return -1;
-        }else if(comparing == 1){
-            return 1;
-        }else {
-            return 0;
-        }
-    }
-
-    public static void main(String[] args) {
-
-        System.out.println(compareStrings("a", "b"));
-
-        String login1 = "ryoung";
-        String login2 = "jenniferhampton";
-
-        System.out.println(compareStrings(login1, login2));
+        return collator.compare(login1, login2);
     }
 }

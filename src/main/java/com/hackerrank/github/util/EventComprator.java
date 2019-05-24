@@ -4,6 +4,9 @@ import com.hackerrank.github.model.Event;
 
 import java.util.Comparator;
 
+/**
+ * Null safe event camparator
+ */
 public class EventComprator implements Comparator<Event> {
 
     @Override

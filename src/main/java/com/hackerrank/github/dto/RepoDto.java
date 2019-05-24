@@ -2,6 +2,9 @@ package com.hackerrank.github.dto;
 
 import java.io.Serializable;
 
+/**
+ * This object should be used to data only for transfer and customize the JSON names used on the controllers
+ */
 public class RepoDto implements Serializable {
     private static final long serialVersionUID = -975402153364620846L;
 
