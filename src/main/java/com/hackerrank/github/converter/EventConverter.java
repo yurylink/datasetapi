@@ -30,7 +30,6 @@ public class EventConverter {
         final String type = isTargerNull ? null : dto.getType();
         final Actor actor = isTargerNull ? null : ActorConverter.convertToEntity(dto.getActor());
         final Repo repo = isTargerNull ? null : RepoConverter.convertEntityToEntity(dto.getRepo());
-//        final Timestamp createdAt = isTargerNull ? null : dto.getCreatedAt() == null ? new Timestamp(new Date().getTime()) : dto.getCreatedAt();
         final Date createdAt = isTargerNull ? null : dto.getCreatedAt() == null ? new Date() : dto.getCreatedAt();
 
         return new Event(id, type, actor, repo, createdAt);

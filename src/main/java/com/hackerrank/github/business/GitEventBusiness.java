@@ -38,12 +38,11 @@ public class GitEventBusiness {
 
     public List<GitEventDto> getAllEvents(){
         List<Event> listOfEvent = eventRepository.findAll();
-        return listOfEvent.stream().map(event -> EventConverter.convertEntityToDto(event)).collect(Collectors.toList());
+        return listOfEvent.stream().map(this::convertGitEvent).collect(Collectors.toList());
     }
 
     public GitEventDto createEvent(GitEventDto dto){
         final Event entity = eventRepository.save(EventConverter.convertDtoToEntity(dto));
-
         return EventConverter.convertEntityToDto(entity);
     }
 
@@ -51,7 +50,7 @@ public class GitEventBusiness {
         final List<Event> events = eventRepository.findAllByActor_Id(actorId);
         if(events == null)
             throw new Exception("No entity found");
-        List<GitEventDto> eventsDtos = events.stream().map(event -> EventConverter.convertEntityToDto(event)).collect(Collectors.toList());
+        List<GitEventDto> eventsDtos = events.stream().map(this::convertGitEvent).collect(Collectors.toList());
         if(events.isEmpty())
             throw new Exception("No entity found");
         return eventsDtos;
@@ -70,18 +69,13 @@ public class GitEventBusiness {
     }
 
     public List<ActorDto> findAllSortedByEventQuantity(){
-        final List<Actor> resultEntity = actorRepository.findAll();
-
-        return resultEntity.
-                stream().
-                sorted(new ActorEventQuantityComparator()).
-                map(actor -> ActorConverter.convertToDto(actor)).
-                collect(Collectors.toList());
+        List<Actor> resultEntity = actorRepository.findAll();
+        final List<Actor> sortedList = resultEntity.stream().sorted(new ActorEventQuantityComparator()).collect(Collectors.toList());
+        return sortedList.stream().map(this::convertActor).collect(Collectors.toList());
     }
 
     public List<ActorDto> findAllSortedByEventStreak() {
         List<Actor> resultEntity = actorRepository.findAll();
-//        final List<Actor> actorListWithStreak = resultEntity.stream().map(actor -> ActorStreakCalculation.setMaximumStreakAndLatestEventDate(actor) ).collect(Collectors.toList());
         final List<Actor> actorListWithStreak = new ArrayList<>();
         resultEntity.
                 stream().
@@ -89,8 +83,15 @@ public class GitEventBusiness {
 
         return actorListWithStreak.
                 stream().
-                sorted().
-                map(actor -> ActorConverter.convertToDto(actor)).
+                map(this::convertActor).
                 collect(Collectors.toList());
+    }
+
+    private ActorDto convertActor(Actor actor){
+        return ActorConverter.convertToDto(actor);
+    }
+
+    private GitEventDto convertGitEvent(Event gitEvent){
+        return EventConverter.convertEntityToDto(gitEvent);
     }
 }

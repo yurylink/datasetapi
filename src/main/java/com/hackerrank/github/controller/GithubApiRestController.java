@@ -37,9 +37,9 @@ public class GithubApiRestController {
     }
 
     @PostMapping("/events")
-    public ResponseEntity<GitEventDto> createEvent(@RequestBody GitEventDto dto){
+    public ResponseEntity createEvent(@RequestBody GitEventDto dto){
         GitEventDto responseDto = business.createEvent(dto);
-        return ResponseEntity.ok(responseDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(responseDto);
     }
 
     @GetMapping("/events/actors/{actorID}")
